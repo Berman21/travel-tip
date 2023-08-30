@@ -26,7 +26,7 @@ function getLocs() {
 }
 
 function getGeo(value) {
-    // let prm = storageService.query(KEY).then(locs => locs.find(loc => loc.name === value))
+    // let prm = storageService.query(KEY).then(locs => locs.find(loc => loc.name === value))  todo:sdd if
     // if(prm) return prm
 
     console.log('ajax for geocode');
