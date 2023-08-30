@@ -26,8 +26,8 @@ function getLocs() {
 }
 
 function getGeo(value) {
-    let prm = storageService.query(KEY).then(locs => locs.find(loc => loc.name === value))
-    if(prm) return prm
+    // let prm = storageService.query(KEY).then(locs => locs.find(loc => loc.name === value))
+    // if(prm) return prm
 
     console.log('ajax for geocode');
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${api.GOOGLE_MAP_KEY}`)

@@ -90,6 +90,7 @@ function onSearch() {
 
     locService.getGeo(searchText)
         .then(pos => {
+            console.log(pos);
             locService.createLoc({ name: searchText, lat: pos.lat, lng: pos.lng })
             onPanTo(pos.lat, pos.lng)
             onAddMarker(pos.lat, pos.lng)
