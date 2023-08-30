@@ -4,6 +4,7 @@ import { storageService } from './async-storage.service.js'
 
 export const locService = {
     getLocs,
+    getLoc,
     getGeo,
     createLoc,
     deleteLoc
