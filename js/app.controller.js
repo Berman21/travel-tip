@@ -11,10 +11,11 @@ window.onGo = onGo
 window.onSearch = onSearch
 
 function onInit() {
-    renderFilterByQueryParams()
+    // renderFilterByQueryParams()
     mapService.initMap()
         .then(() => {
             console.log('Map is ready')
+            renderFilterByQueryParams()
         })
         .catch(() => console.log('Error: cannot init map'))
 }
@@ -106,7 +107,8 @@ function setQueryParams(loc) {
 function renderFilterByQueryParams() {
     const newQueryParams = new URLSearchParams(window.location.search)
     const loc = {
-        name: newQueryParams.get('lat') || '',
-        rate: +newQueryParams.get('lng') || ''
+        lat: +newQueryParams.get('lat') || '',
+        lng: +newQueryParams.get('lng') || ''
     }
+    onPanTo(loc.lat,loc.lng)
 }
