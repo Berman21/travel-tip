@@ -24,7 +24,7 @@ function getLocs() {
     })
 }
 
-function getGeo(value = 'newyork') {
+function getGeo(value) {
     console.log('ajax for geocode');
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${api.GOOGLE_MAP_KEY}`)
         .then(res => res.data.results[0].geometry.location)  //{lng:34.4546 ; lat:23.4322}
@@ -45,4 +45,8 @@ function createLoc(loc) {
 
 function deleteLoc(id) {
     storageService.remove(KEY, id)
+}
+
+function getLoc(id){
+    return storageService.get(KEY,id)
 }
