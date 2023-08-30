@@ -8,6 +8,8 @@ window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onDelete = onDelete
 window.onGo = onGo
+window.onSearch = onSearch
+window.onSearch = onSearch
 
 function onInit() {
     mapService.initMap()
@@ -57,12 +59,11 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
 function renderLocs(locs) {
     console.log(locs)
     const strHTMLs = locs.map(loc => {
-        // const id = makeId() // כדי למחוק צריך id ולא this
         return `
     <li>
         <span>${loc.name}</span>
-        <button class="btn-delete" onclick="onDelete(this)">Delete</button>
-        <button class="btn-go" onclick="onGo(this)">Go</button>
+        <button class="btn-delete" onclick="onDelete('${loc.id}')">Delete</button>
+        <button class="btn-go" onclick="onGo('${loc.id}')">Go</button>
     </li>
     `
     })
@@ -70,13 +71,23 @@ function renderLocs(locs) {
 }
 
 function onDelete(elDelete) {
-    console.log(elDelete)
-    console.log('Delete')
-    // delete()
+    locService.deleteLoc(elDelete)
+    onGetLocs()
 }
 
 function onGo(elGo) {
-    console.log(elGo)
-    console.log('Go')
-    // go()
+    locService.getLoc(elGo)
+    .then(loc => onPanTo(loc.lat, loc.lng))
+}
+
+function onSearch() {
+    const searchInput = document.getElementById('search-input')
+    const searchText = searchInput.value
+
+    locService.getGeo(searchText)
+        .then(pos => {
+            locService.createLoc({ name: searchText, lat: pos.lat, lng: pos.lng })
+            onPanTo(pos.lat, pos.lng)
+            onAddMarker(pos.lat, pos.lng)
+        })
 }
