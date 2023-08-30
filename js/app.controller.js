@@ -9,9 +9,9 @@ window.onGetUserPos = onGetUserPos
 window.onDelete = onDelete
 window.onGo = onGo
 window.onSearch = onSearch
-window.onSearch = onSearch
 
 function onInit() {
+    renderFilterByQueryParams()
     mapService.initMap()
         .then(() => {
             console.log('Map is ready')
@@ -77,7 +77,10 @@ function onDelete(elDelete) {
 
 function onGo(elGo) {
     locService.getLoc(elGo)
-    .then(loc => onPanTo(loc.lat, loc.lng))
+        .then(loc => {
+            onPanTo(loc.lat, loc.lng)
+            setQueryParams(loc)
+        })
 }
 
 function onSearch() {
@@ -89,5 +92,21 @@ function onSearch() {
             locService.createLoc({ name: searchText, lat: pos.lat, lng: pos.lng })
             onPanTo(pos.lat, pos.lng)
             onAddMarker(pos.lat, pos.lng)
+            setQueryParams(pos)
         })
+}
+
+function setQueryParams(loc) {
+    const queryParams = `?lat=${loc.lat || ''}&lng=${loc.lng || ''}`
+    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryParams
+    window.history.pushState({ path: newUrl }, '', newUrl)
+
+}
+
+function renderFilterByQueryParams() {
+    const newQueryParams = new URLSearchParams(window.location.search)
+    const loc = {
+        name: newQueryParams.get('lat') || '',
+        rate: +newQueryParams.get('lng') || ''
+    }
 }
