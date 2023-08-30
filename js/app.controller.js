@@ -110,5 +110,6 @@ function renderFilterByQueryParams() {
         lat: +newQueryParams.get('lat') || '',
         lng: +newQueryParams.get('lng') || ''
     }
+    if(loc.lat === '' || loc.lng === '') return
     onPanTo(loc.lat,loc.lng)
 }
