@@ -28,7 +28,7 @@ function getGeo(value = 'newyork') {
     console.log('ajax for geocode');
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${api.GOOGLE_MAP_KEY}`)
         .then(res => console.log(res.data.results[0].geometry.location))  //{lng:34.4546 ; lat:23.4322}
-        .catch()
+        
 }   
 
 function save(loc) {
